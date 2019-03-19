@@ -42,8 +42,8 @@ public class AFD{
 				
 				} else if (count == 3) {
 
-					finalesE = linea;
-				
+					finalesE = linea.replace(",", " ");
+					System.out.println(finalesE);
 				} else if (count >= 4) {
 
 					String limOne = linea.replace(",", " ");
@@ -103,7 +103,12 @@ public class AFD{
 				return false;
 			}
 		}
-		return true;
+		for(int j = 0; j < finalesE.length(); j++) {
+			if(Character.getNumericValue(finalesE.charAt(j)) == count) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/*
