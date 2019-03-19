@@ -49,16 +49,15 @@ public class AFD{
 					String limOne = linea.replace(",", " ");
 					String setVal = limOne.replace("->", " ");
 					afdPos.add(setVal);	
-					for (int j = 0; j < afdPos.size(); j++) {							
+
+					/* for (int j = 0; j < afdPos.size(); j++) {							
 						System.out.println("_________");
-						System.out.println(linea);	
 						System.out.println(afdPos.get(j));
 						System.out.println("_________");
-					}
+					} */
 				
 				} 
 			}
-
 		} catch(Exception e) {
 			System.out.println(e);
 		}finally {
@@ -77,8 +76,15 @@ public class AFD{
 		un entero que representa el siguiente estado
 	*/
 	public int getTransition(int currentState, char symbol){
-		for (int j = 0; j <= afdPos.size(); j++) {
+		for (int j = 0; j < afdPos.size(); j++) {
 			String aux = afdPos.get(j);
+
+			if(Character.getNumericValue(aux.charAt(0)) == currentState) {
+				if(aux.charAt(2) == symbol) {
+					int valRet = Character.getNumericValue(aux.charAt(4));
+					return valRet;
+				}
+			}
 		}
 		return 0;
 	}
@@ -90,7 +96,14 @@ public class AFD{
 		por el afd
 	*/
 	public boolean accept(String string){
-		return false;
+		int count = 1;
+		for(int j = 0; j < string.length(); j++) {
+			count = getTransition(count, string.charAt(j));
+			if(count == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/*
@@ -118,6 +131,8 @@ public class AFD{
 					System.out.println("ingrese una cuerda: ");
 					String caracteres;
 					caracteres = input.nextLine();
+					boolean ac = cargar.accept(caracteres);
+					System.out.println(ac);
 					//por definir
 					if(caracteres.equals(" ") || caracteres.equals("")) {
 						fin = false;
