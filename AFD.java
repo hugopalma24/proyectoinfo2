@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 /*
 	Utilice esta clase para guardar la informacion de su
 	AFD. NO DEBE CAMBIAR LOS NOMBRES DE LA CLASE NI DE LOS 
@@ -20,7 +20,7 @@ public class AFD{
 	int cantidadPeliculas;
 	String finalesE;
 	
-	public AFD(String path){
+	public AFD(String path){	
 		File archivo = null;
     	FileReader filer = null;
       	BufferedReader buffer = null;
@@ -32,24 +32,33 @@ public class AFD{
 			String linea;
 			int count = 0;
 			while((linea=buffer.readLine())!=null) {
-				count = count++;
-				switch (count) {
-					case 1:
-						simbolosTerminales = linea;
-						break;
-					case 2: 
-						cantidadPeliculas = Integer.parseInt(linea);
-						break;
-					case 3:
-						finalesE = linea;
-						break;
-					default:
-						String limOne = linea.replace(",", " ");
-						String setVal = limOne.replace("->", " ");
-						afdPos.add(linea);	
-				}
+				count = count + 1;
+				if(count == 1) {
+					simbolosTerminales = linea;
+
+				} else if (count == 2) {
+
+					cantidadPeliculas = Integer.parseInt(linea);
 				
+				} else if (count == 3) {
+
+					finalesE = linea;
+				
+				} else if (count >= 4) {
+
+					String limOne = linea.replace(",", " ");
+					String setVal = limOne.replace("->", " ");
+					afdPos.add(setVal);	
+					for (int j = 0; j < afdPos.size(); j++) {							
+						System.out.println("_________");
+						System.out.println(linea);	
+						System.out.println(afdPos.get(j));
+						System.out.println("_________");
+					}
+				
+				} 
 			}
+
 		} catch(Exception e) {
 			System.out.println(e);
 		}finally {
@@ -68,6 +77,9 @@ public class AFD{
 		un entero que representa el siguiente estado
 	*/
 	public int getTransition(int currentState, char symbol){
+		for (int j = 0; j <= afdPos.size(); j++) {
+			String aux = afdPos.get(j);
+		}
 		return 0;
 	}
 
@@ -92,6 +104,32 @@ public class AFD{
 		de la forma que desee. 
 	*/
 	public static void main(String[] args) throws Exception{
+		String bandera;
+		boolean fin = true;
 		
+		if(args.length > 0) {
+			if(args.length == 2) {
+				
+				AFD cargar = new AFD(args[0]);
+				bandera = args[1];
+				Scanner input = new Scanner(System.in);
+
+				while(fin) {
+					System.out.println("ingrese una cuerda: ");
+					String caracteres;
+					caracteres = input.nextLine();
+					//por definir
+					if(caracteres.equals(" ") || caracteres.equals("")) {
+						fin = false;
+					}
+				}
+
+			} else if (args.length == 3) {
+			
+
+			}
+		} else {
+			System.out.println("La clase debe tener argumentos");
+		}
 	}
 }
