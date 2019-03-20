@@ -43,7 +43,6 @@ public class AFD{
 				} else if (count == 3) {
 
 					finalesE = linea.replace(",", " ");
-					System.out.println(finalesE);
 				} else if (count >= 4) {
 
 					String limOne = linea.replace(",", " ");
@@ -126,7 +125,7 @@ public class AFD{
 		boolean fin = true;
 		
 		if(args.length > 0) {
-			if(args.length == 2) {
+			if(args.length == 2 && args[1].equals("-i")) {
 				
 				AFD cargar = new AFD(args[0]);
 				bandera = args[1];
@@ -144,9 +143,38 @@ public class AFD{
 					}
 				}
 
-			} else if (args.length == 3) {
-			
+			} else if (args.length == 3 && args[1].equals("-f")) {
+				File archivo = null;
+    			FileReader filer = null;
+      			BufferedReader buffer = null;
+				AFD cargar = new AFD(args[0]);
+				bandera = args[1];
+				try {
+					archivo = new File (args[2]);
+					filer = new FileReader(archivo);
+					buffer = new BufferedReader(filer);
+					String linea;
+					int count = 1;
+					System.out.println("LEYENDO CUERDAS...");					
+					while((linea=buffer.readLine())!=null) {
+						boolean ac = cargar.accept(linea);
+						System.out.println("------------------------------------------------");					
+						System.out.println("cuerda No." +count+ " aceptada: "  +ac);
+						System.out.println("------------------------------------------------");					
+						count = count + 1;
+					}
+				} catch(Exception e) {
+					System.out.println(e);
+				}finally {
+					try {
 
+					}catch(Exception etwo) {
+						System.out.println(etwo);
+					}
+				}
+
+			} else {
+				System.out.println("Error en parametros vuelva a intentarlo!");	
 			}
 		} else {
 			System.out.println("La clase debe tener argumentos");
